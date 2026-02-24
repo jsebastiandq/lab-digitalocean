@@ -2,7 +2,10 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
+// Trust proxy (useful for DigitalOcean/Nginx)
+app.set('trust proxy', 1);
 
 // Set view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -17,6 +20,6 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
 });
